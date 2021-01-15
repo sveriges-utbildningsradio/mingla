@@ -56,6 +56,46 @@ Just run `mingla` at 09:00, 09:15, 12:00 and 14:50!
 
 We love contributions, see [CONTRIBUTING](docs/CONTRIBUTING.md) for more information.
 
+## run locally from python
+
+run `pip install -e . ` to install all requirements
+
+you need a slack token to start the application
+
+
+then run python mingla/main.py
+
+
+## Slack bot setup
+
+create a new "slack app" - https://api.slack.com/apps
+(By default, any member of a Slack workspace can install an app.) - https://slack.com/intl/en-se/help/articles/202035138-Add-apps-to-your-Slack-workspace
+
+From this you need the App ID, and add the OAuth & Permission Scopes
+
+![](docs/screenshot-slack-app-basic.png)
+
+![](docs/screenshot-slack-app-permissions.png)
+
+## Using docker
+
+### build and push
+
+docker build . -t mingla:latest
+docker tag mingla:latest <REGISTRY-NAME>/mingla:latest
+docker push <REGISTRY-NAME>/mingla:latest
+
+### test your docker image if you want to
+docker run mingla:latest python mingla/main.py
+docker run -it mingla:latest sh
+
+
+## Deploy to kubernetes
+Make sure you have the secret slack-app-token available as a secret in kubernetes
+also make sure you have a namespace for mingla top deploy into
+
+kubectl apply -f deploy/ --namespace=mingla
+
 ## License
 
 This software is licensed under the MIT license, for more information see [LICENSE](LICENSE).

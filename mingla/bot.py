@@ -57,7 +57,7 @@ class Bot:
                     "fallback": "TODO",
                     "color": "#36a64f",
                     "title": f"{self.get_place()}",
-                    "title_link": f"https://meet.jit.si/svt-mingla-{uuid.uuid4().hex}",
+                    "title_link": f"https://meet.jit.si/ur-mingla-{uuid.uuid4().hex}",
                     "text": f"Förslag på ämnen är {self.get_subjects()}",
                     "footer": f"{users}",
                 }
@@ -69,6 +69,7 @@ class Bot:
                     "fallback": "TODO",
                     "color": "#9803fc",
                     "title": "Information om hur botten funkar",
+                    # TODO: change below to UR related git repo
                     "title_link": "https://git.svt.se/stbe02/mingla/-/blob/master/README.md",
                     "text": self.config["texts"]["footer"],
                     "footer": f"Dagens tips: {self.get_tips()}",
@@ -77,7 +78,7 @@ class Bot:
 
         try:
             self.client.chat_postMessage(
-                username="Mingla",
+                username="mingla",
                 channel=self.config["environments"][self.bot_env]["channel"],
                 icon_emoji=":coffee:",
                 text=text,
@@ -127,7 +128,7 @@ class Bot:
         for message in response["messages"]:
             yday = datetime.now().timetuple().tm_yday
             if (
-                message.get("username") == "Mingla"
+                message.get("user") == self.config["bot_id"]
                 and re.match(fr"^VOTE {yday}.*", message["text"]) is not None
             ):
                 return message
@@ -136,7 +137,8 @@ class Bot:
         if self.bot_env == "production":
             list_of_online_members = []
         else:
-            list_of_online_members = ["U0298S412"] * int(random.random() * 10)
+            # use your own userid for development
+            list_of_online_members = ["U06LM2VJ8"] * int(random.random() * 10)
 
         response = self.client.conversations_members(
             channel=self.config["environments"][self.bot_env]["channel"]
@@ -151,7 +153,7 @@ class Bot:
     def send_message(self, text):
         try:
             response = self.client.chat_postMessage(
-                username="Mingla",
+                username="mingla",
                 channel=self.config["environments"][self.bot_env]["channel"],
                 icon_emoji=":coffee:",
                 text=text,

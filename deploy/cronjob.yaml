@@ -1,0 +1,138 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ur-mingla-bot-config-map
+data:
+  BOT_ENV: "production"
+
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: slack-mingla-bot-morning
+spec:
+  # workdays at 08:45 the clock is one hour of on the server
+  schedule: "45 7 * * 1-5"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 10
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: app
+              image: registry.tools.ur.se/mingla:latest
+              command: ["python", "mingla/main.py"]
+              envFrom:
+                - configMapRef:
+                    name: ur-mingla-bot-config-map
+              env:
+                - name: SLACK_API_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: "ur-mingla-secrets"
+                      key: "slack-app-token"
+          imagePullSecrets:
+            - name: regcred
+          restartPolicy: OnFailure
+
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: slack-mingla-bot-morning-coffee
+spec:
+  # workdays at 09:00 the clock is one hour of on the server
+  schedule: "00 8 * * 1-5"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 10
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: app
+              image: registry.tools.ur.se/mingla:latest
+              command: ["python", "mingla/main.py"]
+              envFrom:
+                - configMapRef:
+                    name: ur-mingla-bot-config-map
+              env:
+                - name: SLACK_API_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: "ur-mingla-secrets"
+                      key: "slack-app-token"
+          imagePullSecrets:
+            - name: regcred
+          restartPolicy: OnFailure
+
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: slack-mingla-bot-lunch
+spec:
+  # workdays at 12:00 the clock is one hour of on the server
+  schedule: "0 11 * * 1-5"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 10
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: app
+              image: registry.tools.ur.se/mingla:latest
+              command: ["python", "mingla/main.py"]
+              envFrom:
+                - configMapRef:
+                    name: ur-mingla-bot-config-map
+              env:
+                - name: SLACK_API_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: "ur-mingla-secrets"
+                      key: "slack-app-token"
+          imagePullSecrets:
+            - name: regcred
+          restartPolicy: OnFailure
+
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: slack-mingla-bot-afternoon
+spec:
+  # workdays at 14:50 the clock is one hour of on the server
+  schedule: "50 13 * * 1-5"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 10
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: app
+              image: registry.tools.ur.se/mingla:latest
+              command: ["python", "mingla/main.py"]
+              envFrom:
+                - configMapRef:
+                    name: ur-mingla-bot-config-map
+              env:
+                - name: SLACK_API_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: "ur-mingla-secrets"
+                      key: "slack-app-token"
+          imagePullSecrets:
+            - name: regcred
+          restartPolicy: OnFailure

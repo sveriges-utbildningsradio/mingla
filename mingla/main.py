@@ -15,9 +15,11 @@ def main():
     config = yaml.load(open("config.yml"), Loader=yaml.SafeLoader)
 
     if os.getenv("BOT_ENV") == "production":
+        print('running production')
         bot_env = "production"
         token = os.environ["SLACK_API_TOKEN"]
     else:
+        print('running development')
         bot_env = "development"
         token = open("TOKEN").read()
 

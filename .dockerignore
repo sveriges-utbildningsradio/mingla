@@ -1,0 +1,6 @@
+.git
+.github
+.dockerignore
+deploy
+docs
+config.sample.yml
