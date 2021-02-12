@@ -88,14 +88,14 @@ jobs:
           # image reference
           image-ref: test:test
           # exit code when vulnerabilities were found
-          exit-code: # optional, default is 0
+          # exit-code: # optional, default is 0
           # ignore unfixed vulnerabilities
-          ignore-unfixed: # optional
+          ignore-unfixed: true # optional
           # severities of vulnerabilities to be displayed
-          severity: # optional, default is UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+          severity: HIGH,CRITICAL # optional, default is UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
           # output format (table, json, template)
-          format: # optional, default is table
+          # format: # optional, default is table
           # use an existing template for rendering output (@/contrib/sarif.tpl, @/contrib/gitlab.tpl, @/contrib/junit.tpl
-          template: # optional, default is 
+          # template: # optional, default is 
           # writes results to a file with the specified file name
-          output: # optional, default is 
+          # output: # optional, default is 
