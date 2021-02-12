@@ -51,7 +51,7 @@ jobs:
           # List of metadata for an image
           labels: # optional
           # List of tags
-          tags: # optional
+          tags: test:test
           # Always attempt to pull a newer version of the image
           pull: # optional, default is false
           # Sets the target stage to build
@@ -86,7 +86,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.0.8
         with:
           # image reference
-          image-ref: 
+          image-ref: test:test
           # exit code when vulnerabilities were found
           exit-code: # optional, default is 0
           # ignore unfixed vulnerabilities
